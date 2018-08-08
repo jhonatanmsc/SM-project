@@ -62,29 +62,5 @@ def server(protocol):
         print('\n\n')
         pass
 
-
-def serverUDP():
-    try:
-        HOST = '127.0.0.1'              
-        PORT = 10001           
-
-        udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        orig = (HOST, PORT)
-        udp.bind(orig)
-        
-        print("\nServidor ligado como UDP em %s:%s" %(HOST,PORT))
-        total_received = 0
-        total_data = 10485760 #10MB in Bytes
-
-        while True:
-            msg, cliente = udp.recvfrom(512)
-            print ("recebendo arquivo de %s:%s"%cliente)
-
-        udp.close()
-
-    except KeyboardInterrupt as e:
-        print('\n\n')
-        pass
-
 if __name__ == '__main__':
     main()

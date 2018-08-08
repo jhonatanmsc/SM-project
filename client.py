@@ -48,7 +48,7 @@ def sendFile(protocol):
     if protocol == 'tcp':
         server.send(msg)                                        # para porta TCP enviaremos 10Mbytes
     else:                                                       # devido ao limite que a porta UDP
-        for i in range(100):                                     # pode receber/enviar enviarei 1Mbyte 10 vezes
+        for i in range(100):                                    # pode receber/enviar enviarei 1Mbyte 10 vezes
             server.send(msg)
 
     server.close()
