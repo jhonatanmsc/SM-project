@@ -16,7 +16,7 @@ def main():
                 "0 - Sair da Aplicação\n"
                 )
         op = input(menu + "Informe a opção desejada: ")
-        host = input("Informe o endereço do servidor (127.0.0.1 default ): ")
+        host = input("Informe o endereço do servidor (127.0.0.1 default ): ") if op != "0" else False 
         if host == '':
             host = '127.0.0.1'
 
@@ -24,9 +24,9 @@ def main():
             print('\n\nAplicação finalizada pelo usuario!!')
             break
         elif op == "1":
-            sendFile('tcp')
+            sendFile('tcp', host)
         elif op == "2":
-            sendFile('udp')
+            sendFile('udp', host)
         elif op == "3":
             testeQoSTCP('tcp', host)
         elif op == "4":
@@ -53,7 +53,7 @@ def sendFile(protocol, host='127.0.0.1'):
     else:                                                       # devido ao limite que a porta UDP
         for i in range(100):                                    # pode receber/enviar enviarei 1Mbyte 10 vezes
             server.send(msg)
-
+    print("OK")
     server.close()
 
 
@@ -106,7 +106,7 @@ def larguraBanda(protocol, host='127.0.0.1'): ## este método testa o QoS relati
     FILE = 'package-tcp.txt' if protocol == 'tcp' else 'package-udp.txt'
     BASE_FILE = open(FILE, 'r').read()
     HOST = host
-    print('dota '+host)
+
     PORT = 10000 if protocol == 'tcp' else 10001
     PROTOCOL = socket.SOCK_STREAM if protocol == 'tcp' else socket.SOCK_DGRAM
 

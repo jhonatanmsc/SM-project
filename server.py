@@ -25,7 +25,7 @@ def main():
 
 def server(protocol):
     try:
-        HOST = '127.0.0.1'        
+        HOST = '0.0.0.0'        
         PORT = 10000 if protocol == 'tcp' else 10001
         PACKET_SIZE = 512                                               # Tamanho do Buffer do Pacote
         PROTOCOL = socket.SOCK_STREAM if protocol == 'tcp' else socket.SOCK_DGRAM
@@ -55,7 +55,7 @@ def server(protocol):
                 print(msg)
                 total_received += PACKET_SIZE
 
-            print ('Finalizando conexao do cliente %s [%s]' %cliente)
+            print ('Pacote enviado pelo cliente %s [%s]' %cliente)
             con.close() if protocol == 'tcp' else ptServer.close()
 
     except KeyboardInterrupt as e:
