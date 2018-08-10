@@ -49,10 +49,11 @@ def sendFile(protocol, host='127.0.0.1'):
         msg = bytes(BASE_FILE*10000, 'utf-8')
         server.send(msg)                                      # para porta TCP enviaremos 10Mbytes
     else:
-        msg = bytes(BASE_FILE, 'utf-8')                       # devido ao limite que a porta UDP
-        for i in range(10000):                                # pode receber/enviar enviarei 1Kbyte 100 vezes
+        msg = bytes(BASE_FILE*32, 'utf-8')                       # devido ao limite que a porta UDP
+        for i in range(320):                                # pode receber/enviar enviarei 32Kbyte 2560 vezes
             server.send(msg)
 
+    print('envio concluido')
     server.close()
 
 
