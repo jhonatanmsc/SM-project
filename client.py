@@ -36,7 +36,7 @@ def main():
 
 def sendFile(protocol, host='127.0.0.1'):
     HOST = host
-    FILE = 'package-tcp.txt' if protocol == 'tcp' else 'package-udp.txt'
+    FILE = 'package.txt'
     BASE_FILE = open(FILE, 'r').read()
     PORT = 10000 if protocol == 'tcp' else 10001
     PROTOCOL = socket.SOCK_STREAM if protocol == 'tcp' else socket.SOCK_DGRAM
@@ -44,22 +44,21 @@ def sendFile(protocol, host='127.0.0.1'):
     server = socket.socket(socket.AF_INET, PROTOCOL)
     dest = (HOST, PORT)
     server.connect(dest)
-    msg = bytes(BASE_FILE, 'utf-8')
-    print(type(msg))
-    server.send(msg)
 
     if protocol == 'tcp':
-        server.send(msg)                                        # para porta TCP enviaremos 10Mbytes
-    else:                                                       # devido ao limite que a porta UDP
-        for i in range(100):                                    # pode receber/enviar enviarei 1Mbyte 10 vezes
+        msg = bytes(BASE_FILE*10000, 'utf-8')
+        server.send(msg)                                      # para porta TCP enviaremos 10Mbytes
+    else:
+        msg = bytes(BASE_FILE, 'utf-8')                       # devido ao limite que a porta UDP
+        for i in range(10000):                                # pode receber/enviar enviarei 1Kbyte 100 vezes
             server.send(msg)
-    print("OK")
+
     server.close()
 
 
 def testeQoSTCP(protocol, host='127.0.0.1', as_a_dict=False):
     SERVIDOR = host
-    print("LOL " + host)
+
     if isAlive(SERVIDOR):
 
         try:
@@ -103,7 +102,7 @@ def latencia(host='127.0.0.1'): ## este método testa o QoS relativo à latênci
 
 
 def larguraBanda(protocol, host='127.0.0.1'): ## este método testa o QoS relativo á largura de banda do meio
-    FILE = 'package-tcp.txt' if protocol == 'tcp' else 'package-udp.txt'
+    FILE = 'package.txt'
     BASE_FILE = open(FILE, 'r').read()
     HOST = host
 
@@ -116,7 +115,8 @@ def larguraBanda(protocol, host='127.0.0.1'): ## este método testa o QoS relati
     msg = bytes(BASE_FILE, 'utf-8')
     if protocol == 'tcp':
         init = time.time()
-        server.send(msg)
+        for i in range(100):
+            server.send(msg)
         end = time.time()
     else:
         init = time.time()
